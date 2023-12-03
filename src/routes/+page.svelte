@@ -1,4 +1,5 @@
 <script>
+	import { onMount } from "svelte";
 	import Home from "../components/home/Home.svelte";
 	import {authStore} from "../stores/authStore";
 
@@ -14,7 +15,6 @@
 			const articleList = await fetch("https://datasun-backend.vercel.app/get_articles/");
 			const data = await articleList.json();
 			cover1 = data[0];
-			console.log(cover1);
 			cover2 = data[1];
 			carousel1 = data.slice(2, 13);
 			carousel2 = data.slice(13, 24);
@@ -28,24 +28,32 @@
 		try{
 			const articleList = await fetch("https://datasun-backend.vercel.app/get_recs/" + $authStore.currentUser.uid);
 			const data = await articleList.json();
-			cover1 = data.cover1;
-			cover2 = data.cover2;
-			carousel1 = data.carousel1;
-			topic1 = data.topic1;
-			carousel2 = data.carousel2;
-			topic2 = data.topic2;
-			loadDefault();
+			console.log("Personalized Articles:", data)
+			if (data!==null) {
+				loadDefault();
+				topic1 = null;
+				topic2 = null;
+			} else {
+				cover1 = data.cover1;
+				cover2 = data.cover2;
+				carousel1 = data.carousel1;
+				topic1 = data.topic1;
+				carousel2 = data.carousel2;
+				topic2 = data.topic2;	
+			}
 		} catch (error) {
 			console.error("Error loading personalized articles", error);
 			loadDefault();
 		}
 	}
+	onMount(() => {
+		if ($authStore.currentUser) {
+			loadPersonal();
+		} else {
+			loadDefault();
+		}
+	});
 
-	if ($authStore.currentUser) {
-		loadPersonal();
-	} else {
-		loadDefault();
-	}
 </script>
 
 <main>
