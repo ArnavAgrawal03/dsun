@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+// import { getAnalytics } from "Firebase/analytics";
 import { getAuth } from "Firebase/auth";
 import { collection, doc, getFirestore } from "Firebase/firestore/lite";
 
