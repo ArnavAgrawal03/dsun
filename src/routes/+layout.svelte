@@ -5,10 +5,10 @@
     import User from "carbon-icons-svelte/lib/User.svelte";
     import { Logout } from "carbon-icons-svelte";
     import "carbon-components-svelte/css/white.css";
-    import { onAuthStateChanged, signOut } from 'Firebase/auth';
+    import { onAuthStateChanged, signOut } from 'firebase/auth';
     import { navigating } from '$app/stores';
     import { onMount } from 'svelte';
-    import { auth } from '../firebase';
+    import { auth } from '../firebase_loader';
     import { getStores } from '$app/stores';
     // import { Loading } from 'carbon-components-svelte';
     

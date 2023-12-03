@@ -1,10 +1,10 @@
 <script>
     import SignIn from "../../../components/auth/sign_in.svelte";
     import { Link } from "carbon-components-svelte";
-    import { signInWithEmailAndPassword } from "Firebase/auth";
-    import { auth, userDoc } from "../../../firebase";
+    import { signInWithEmailAndPassword } from "firebase/auth";
+    import { auth, userDoc } from "../../../firebase_loader";
     import { goto } from "$app/navigation";
-    import { setDoc } from "Firebase/firestore/lite";
+    import { setDoc } from "firebase/firestore/lite";
     let error;
 
     async function signIn(event) {

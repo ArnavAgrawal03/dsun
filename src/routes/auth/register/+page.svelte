@@ -1,10 +1,10 @@
 <script>
     import SignUp from "../../../components/auth/sign_up.svelte";
     import { Link } from "carbon-components-svelte";
-    import { createUserWithEmailAndPassword, updateProfile } from "Firebase/auth";
-    import { auth, userDoc } from "../../../firebase";
+    import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+    import { auth, userDoc } from "../../../firebase_loader";
     import { goto } from '$app/navigation'
-    import { setDoc } from 'Firebase/firestore/lite';
+    import { setDoc } from 'firebase/firestore/lite';
     let errors;
 
     async function signUp(event){
