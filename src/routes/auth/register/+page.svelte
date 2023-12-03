@@ -1,20 +1,15 @@
 <script>
     import SignUp from "../../../components/auth/sign_up.svelte";
     import { Link } from "carbon-components-svelte";
-    import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-    import { auth, userDoc } from "../../../firebase_loader";
+    import {authHandlers} from "../../../stores/authStore";
     import { goto } from '$app/navigation'
-    import { setDoc } from 'firebase/firestore/lite';
     let errors;
 
     async function signUp(event){
         try {
-            let user = await createUserWithEmailAndPassword(auth, event.detail.email, event.detail.password);
-            await updateProfile(user.user, {displayName: event.detail.username});
-            await setDoc(userDoc(auth.currentUser.uid), {username: event.detail.username, email: event.detail.email});
-            await goto("/home");
+            await authHandlers.signup(event.detail.email, event.detail.password, event.detail.username);
         } catch (error) {
-            console.log('error from creating user', e);
+            console.log('error from creating user', error.message);
         }
     }
 </script>

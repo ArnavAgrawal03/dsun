@@ -1,20 +1,16 @@
 <script>
     import SignIn from "../../../components/auth/sign_in.svelte";
     import { Link } from "carbon-components-svelte";
-    import { signInWithEmailAndPassword } from "firebase/auth";
-    import { auth, userDoc } from "../../../firebase_loader";
+    import {authHandlers} from "../../../stores/authStore";
     import { goto } from "$app/navigation";
-    import { setDoc } from "firebase/firestore/lite";
     let error;
 
     async function signIn(event) {
         try {
-            let user = await signInWithEmailAndPassword(auth, event.detail.email, event.detail.password)
-            await setDoc(userDoc(auth.currentUser.uid), { username: user.user.displayName, email: user.user.email })
-            await goto("/home")
+            await authHandlers.login(event.detail.email, event.detail.password)
+            await goto("/")
         } catch (error) {
-            console.log("error signin in", error.message)
-          error = error.message
+            console.log("error signin in: ", error.message)
         }
     }
 </script>
