@@ -2,32 +2,21 @@
     import Card from "./Card.svelte";
     import { onMount } from "svelte";
     export let handleClick; // Pass down the handleClick function
-      function handleCarouselClick(article) {
+    function handleCarouselClick(article) {
           handleClick(article);
       }
-      function handleClose() {
+    function handleClose() {
         selectedArticle = null; // Or whatever logic is needed to close the detailed view
     }
-  
+    export let topic;
     export let articles;
+
     let currentIndex = 0;
     let displayedArticles = [];
     let maxIndex = 0;
     let cardsPerRow = 1;
     let cardWidth = 320; // Initial card width
   
-    // const updateCardsPerRow = () => {
-    //   const windowWidth = window.innerWidth;
-    //   const availableCardsPerRow = Math.floor(windowWidth / cardWidth) - 1;
-  
-    //   // If there's not enough space for the fixed number of cards, increase the card width
-    //   if (availableCardsPerRow < cardsPerRow) {
-    //     cardWidth = Math.floor(windowWidth / cardsPerRow);
-    //   }
-  
-    //   // Adjust the cardsPerRow based on the updated card width
-    //   cardsPerRow = Math.max(availableCardsPerRow, 1);
-    // };
     let resized = false; // New flag to track resizing
   
   const updateCardsPerRow = () => {
@@ -61,15 +50,6 @@
       container.scrollBy({ left: cardWidth, behavior: "smooth" });
     };
   
-    // onMount(() => {
-    //   updateCardsPerRow(); // Initial call on mount
-    //   window.addEventListener("resize", updateCardsPerRow); // Call on window resize
-  
-    //   // Cleanup listener on component destroy
-    //   return () => {
-    //     window.removeEventListener("resize", updateCardsPerRow);
-    //   };
-    // });
     onMount(() => {
     updateCardsPerRow(); // Initial call on mount
     window.addEventListener("resize", () => {
@@ -96,7 +76,7 @@
   </script>
   
   <div class="carousel">
-    <h2>NEWS TOPIC</h2>
+    <h2>{topic}</h2>
     <div class="carousel-container">
       <div class="arrow left" on:click={showPrevious}>&#9664;</div>
       <div class="article-container">

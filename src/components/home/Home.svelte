@@ -2,52 +2,28 @@
 	import Card from "./Card.svelte";
 	import Carousel from "./Carousel.svelte";
 	import Article from "./Article.svelte";
-	export let articles;
-	let article1 = null;
-	let article2 = null;
+
+	export let cover1;
+	export let cover2;
+	export let carousel1;
+	export let carousel2;
+	export let topic1 = "Cornell University News";
+	export let topic2 = "Ithaca News";
+
+	let article1 = cover1;
+	let article2 = cover2;
 	let showHome = true;
 	let showArticle = false;
 	let art = null;
 
-	$: {
-		if (articles && articles.length > 0) {
-			article1 = articles[0] || null;
-			article2 = articles[1] || null;
-
-		}
-	}
 	function selectArticle(article) {
 		showArticle = true;
 		showHome = false;
 		art = article; // Set the clicked article to display in the article view
-}
-// function handleClick(article) {
-//     if (showHome) {
-//         // If in the home view, handle the click to display the article
-//         selectArticle(article);
-//     } else {
-//         // If in the article view, return to the home view
-//         showArticle = false;
-//         showHome = true;
-//     }
-// }
-
-  // Keyboard event handler
-  function handleKeyDown(event) {
-    if (event.key === "Enter" || event.key === " ") {
-      handleClick();
-    }
-  }
+	}
 </script>
 
 <main>
-	<!-- <a href="homepage.svelte"
-		><img
-			src="https://cornellsun.com/wp-content/uploads/2015/11/sunbannerwebsite-10.png"
-			alt="CornellDailySunLogo"
-			class="sun-banner"
-		/></a
-	> -->
 	{#if showHome}
 		<div>
 		<div class="first_two">
@@ -71,10 +47,10 @@
 		</div>
 		</div>
 		<div class="topic1">
-			<Carousel {articles} handleClick={selectArticle}/>
+			<Carousel topic = {topic1} articles = {carousel1} handleClick={selectArticle}/>
 		</div>
 		<div class="topic2">
-			<Carousel {articles} handleClick={selectArticle}/>
+			<Carousel topic = {topic2} articles = {carousel2} handleClick={selectArticle}/>
 		</div>
 	{/if}
 	{#if showArticle}
@@ -87,12 +63,6 @@
 		text-align: center;
 		padding: 1em;
 		max-width: 100%;
-		margin: 0 auto;
-	}
-
-	.sun-banner {
-		width: 100%;
-		max-width: 800px; /* Set a maximum width for the banner */
 		margin: 0 auto;
 	}
 

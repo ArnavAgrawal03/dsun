@@ -1,23 +1,55 @@
 <script>
 	import Home from "../components/home/Home.svelte";
-	let articles = null;
-	async function loadArticles() {
+	import {authStore} from "../stores/authStore";
+
+	let cover1 = null;
+	let cover2 = null;
+	let carousel1 = null;
+	let topic1 = "First Topic Here (Unsure how to do this for anonymous users)";
+	let carousel2 = null;
+	let topic2 = "Second Topic Here (Unsure how to do this for anonymous users)";
+
+	async function loadDefault() {
 		try {
 			const articleList = await fetch("https://datasun-backend.vercel.app/get_articles/");
 			const data = await articleList.json();
-			articles = data; // Update the articles variable with the fetched data
+			cover1 = data[0];
+			console.log(cover1);
+			cover2 = data[1];
+			carousel1 = data.slice(2, 13);
+			carousel2 = data.slice(13, 24);
 			// console.log("articles:", articles);
 		} catch (error) {
-			console.error("Error:", error);
+			console.error("Error loading random articles:", error);
 		}
 	}
 
-	// Load articles when the component is initialized
-	loadArticles();
+	async function loadPersonal(){
+		try{
+			const articleList = await fetch("https://datasun-backend.vercel.app/get_recs/" + $authStore.currentUser.uid);
+			const data = await articleList.json();
+			cover1 = data.cover1;
+			cover2 = data.cover2;
+			carousel1 = data.carousel1;
+			topic1 = data.topic1;
+			carousel2 = data.carousel2;
+			topic2 = data.topic2;
+			loadDefault();
+		} catch (error) {
+			console.error("Error loading personalized articles", error);
+			loadDefault();
+		}
+	}
+
+	if ($authStore.currentUser) {
+		loadPersonal();
+	} else {
+		loadDefault();
+	}
 </script>
 
 <main>
-	<Home {articles} />
+	<Home {cover1} {cover2} {carousel1} {carousel2} {topic1} {topic2} />
 </main>
 
 <style>
