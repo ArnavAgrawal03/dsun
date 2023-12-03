@@ -1,5 +1,5 @@
 <script>
-	import Card from "./Card.svelte";
+	import Card from "src/components/home/Card.svelte";
 	import Carousel from "./Carousel.svelte";
 	import Article from "./Article.svelte";
 
