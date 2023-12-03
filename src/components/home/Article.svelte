@@ -1,6 +1,6 @@
 <script>
 	export let article;
-    export let handleClose;
+  export let handleClose;
 </script>
 
 <main>
